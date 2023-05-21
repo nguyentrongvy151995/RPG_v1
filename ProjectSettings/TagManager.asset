@@ -9,14 +9,14 @@ TagManager:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Player
   - Water
   - UI
-  - 
-  - 
-  - 
-  - 
-  - 
+  - State
+  - Bomb
+  - Explosion
+  - Interactable
+  - LongGrass
   - 
   - 
   - 
@@ -45,6 +45,9 @@ TagManager:
   - name: Background
     uniqueID: 2348454015
     locked: 0
+  - name: Bomb
+    uniqueID: 1726640197
+    locked: 0
   - name: Player
     uniqueID: 3585803643
     locked: 0
@@ -53,4 +56,10 @@ TagManager:
     locked: 0
   - name: UIManager
     uniqueID: 2517745321
+    locked: 0
+  - name: Death
+    uniqueID: 2251861975
+    locked: 0
+  - name: LongGrass
+    uniqueID: 4890797
     locked: 0
