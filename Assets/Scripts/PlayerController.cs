@@ -16,9 +16,6 @@ public class PlayerController : MonoBehaviour
     GameController game_controller;
     Heart heart;
 
-    public AnimatedSpriteRenderer spriteRendererDeath;
-
-
     public new Rigidbody2D rigibody { get; private set; }
     private Vector2 direction = Vector2.down;
     public float speed = 5f;
@@ -33,17 +30,21 @@ public class PlayerController : MonoBehaviour
     public AnimatedSpriteRenderer spriteRendererLeft;
     public AnimatedSpriteRenderer spriteRendererRight;
     private AnimatedSpriteRenderer activeSpriteRenderer;
+    public AnimatedSpriteRenderer spriteRendererDeath;
+
+    private UIManager uiManager;
 
     private void Awake()
     {
         animator = GetComponent<Animator>();
         rigibody = GetComponent<Rigidbody2D>();
-        activeSpriteRenderer = spriteRendererDown;
+        activeSpriteRenderer = spriteRendererDeath;
     }
 
     void Start()
     {
         game_controller = FindObjectOfType<GameController>();
+        uiManager = FindObjectOfType<UIManager>();
         heart = FindObjectOfType<Heart>();
     }
 
@@ -78,7 +79,7 @@ public class PlayerController : MonoBehaviour
 
                 animator.SetBool("isMoving", isMoving);*/
 
-
+        Debug.Log("update");
         if (Input.GetKey(inputUp))
         {
             SetDirection(Vector2.up, spriteRendererUp);
@@ -97,7 +98,7 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
-            SetDirection(Vector2.zero, activeSpriteRenderer);
+            SetDirection(Vector2.zero, spriteRendererDown);
         }
     }
 
@@ -132,6 +133,7 @@ public class PlayerController : MonoBehaviour
         spriteRendererDown.enabled = spriteRenderer == spriteRendererDown;
         spriteRendererLeft.enabled = spriteRenderer == spriteRendererLeft;
         spriteRendererRight.enabled = spriteRenderer == spriteRendererRight;
+        spriteRendererDeath.enabled = spriteRenderer == spriteRendererDeath;
 
         activeSpriteRenderer = spriteRenderer;
         activeSpriteRenderer.idle = direction == Vector2.zero;
@@ -140,7 +142,6 @@ public class PlayerController : MonoBehaviour
     IEnumerator Move(Vector3 targetPost)
     {
         isMoving = true;
-        Debug.Log((targetPost - transform.position).sqrMagnitude > Mathf.Epsilon);
         while ((targetPost - transform.position).sqrMagnitude > Mathf.Epsilon)
         {
             transform.position = Vector3.MoveTowards(transform.position, targetPost, moveSpeed * Time.deltaTime);
@@ -154,9 +155,13 @@ public class PlayerController : MonoBehaviour
 
     private bool IsWalkable(Vector3 targetPos)
     {
-        if (Physics2D.OverlapCircle(targetPos, 0.2f , interactableLayer | grassLayer) != null)
+        if (Physics2D.OverlapCircle(targetPos, 0 , interactableLayer) != null)
         {
-            heart.Decrease();
+            return false;
+        }
+
+        if (Physics2D.OverlapCircle(targetPos, 0, grassLayer) != null)
+        {
             return false;
         }
 
@@ -165,26 +170,42 @@ public class PlayerController : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.CompareTag("Gold"))
+        if (collision.CompareTag("Gold"))
         {
             game_controller.IncrementGold();
             Destroy(collision.gameObject);
         }
 
-        if (collision.gameObject.layer == LayerMask.NameToLayer("Explosion"))
+        /*if (collision.gameObject.layer == LayerMask.NameToLayer("Explosion"))
         {
             Debug.Log("dap bom");
             //gameObject.SetActive(false);
             //DeathSequence();
+        }*/
+
+        if (collision.CompareTag("Bomb"))
+        {
+            heart.Decrease();
+            if (heart.GetMaxHealth() <= 0)
+            {
+                DeathSequence();
+                uiManager.ShowPanelGameOver(true);
+            }
+            Destroy(collision.gameObject);
         }
     }
 
     public void DeathSequence()
     {
-        GetComponent<BombController>().enabled = false;
+        enabled = false;
+       // GetComponent<BombController>().enabled = false;
+        spriteRendererUp.enabled = false;
+        spriteRendererDown.enabled = false;
+        spriteRendererLeft.enabled = false;
+        spriteRendererRight.enabled = false;
         spriteRendererDeath.enabled = true;
 
-        Invoke(nameof(OnDeathSequenceEnded), 1.25f);
+        //Invoke(nameof(OnDeathSequenceEnded), 1.25f);
     }
 
     private void OnDeathSequenceEnded()

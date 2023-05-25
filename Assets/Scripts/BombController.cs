@@ -37,9 +37,9 @@ public class BombController : MonoBehaviour
 
         GameObject bomb = Instantiate(bombPrefab, position, Quaternion.identity);
         bombsRemaining--;
-        yield return new WaitForSeconds(0);
+        yield return new WaitForSeconds(2);
 
-        /*position = bomb.transform.position;
+        position = bomb.transform.position;
 
         Explosion explosion = Instantiate(explosionPrefab, position, Quaternion.identity);
         explosion.SetActiveRenderer(explosion.start);
@@ -51,7 +51,7 @@ public class BombController : MonoBehaviour
         Explode(position, Vector2.right, explosionRadius);
 
         Destroy(bomb);
-        bombsRemaining++;*/
+        bombsRemaining++;
     }
 
     private void Explode(Vector2 position, Vector2 direction, int length)

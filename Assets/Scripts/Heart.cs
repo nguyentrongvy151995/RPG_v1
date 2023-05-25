@@ -13,11 +13,17 @@ public class Heart : MonoBehaviour
     {
         playerHealthSlider.maxValue = maxHealth;
         playerHealthSlider.value = maxHealth;
+        playerHealthSlider.enabled = false;
     }
 
     public void Decrease()
     {
-        playerHealthSlider.value -= 0.2f;
+        playerHealthSlider.value -= 50f;
+    }
+
+    public float GetMaxHealth()
+    {
+        return playerHealthSlider.value;
     }
 
     // Update is called once per frame

@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class UIManager : MonoBehaviour
 {
     public Text scoreText;
+    public GameObject panelGameOver;
 
     // Start is called before the first frame update
     void Start()
@@ -22,5 +23,13 @@ public class UIManager : MonoBehaviour
     public void SetScoreText(string text)
     {
         scoreText.text = text;
+    }
+
+    public void ShowPanelGameOver(bool isShow)
+    {
+        if (panelGameOver)
+        {
+            panelGameOver.SetActive(isShow);
+        }
     }
 }

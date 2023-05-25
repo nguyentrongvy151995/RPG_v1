@@ -5,6 +5,7 @@ using UnityEngine;
 public class GameController : MonoBehaviour
 {
     public GameObject gold;
+    public GameObject bomb;
     UIManager m_ui;
     int gold_score;
 
@@ -12,6 +13,7 @@ public class GameController : MonoBehaviour
     void Start()
     {
         SpawnGold();
+        SpawnBomb();
         m_ui = FindObjectOfType<UIManager>();
         m_ui.SetScoreText("Gold: " + gold_score);
     }
@@ -24,12 +26,24 @@ public class GameController : MonoBehaviour
 
     public void SpawnGold()
     {
-        for(int i = 0; i < 5; i++)
+        for(int i = 0; i < 100; i++)
         {
-            Vector2 spawnPos = new Vector2(Random.Range(-12, 12), Random.Range(-12, 12));
+            Vector2 spawnPos = new Vector2(Random.Range(-68, 80), Random.Range(38, -33));
             if (gold)
             {
                 Instantiate(gold, spawnPos, Quaternion.identity);
+            }
+        }
+    }
+
+    public void SpawnBomb()
+    {
+        for (int i = 0; i < 50; i++)
+        {
+            Vector2 spawnPos = new Vector2(Random.Range(-68, 80), Random.Range(38, -33));
+            if (bomb)
+            {
+                Instantiate(bomb, spawnPos, Quaternion.identity);
             }
         }
     }
