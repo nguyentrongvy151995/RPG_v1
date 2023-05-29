@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Gold
   - Bomb
+  - ItemExtraBomb
   layers:
   - Default
   - TransparentFX
@@ -18,8 +19,8 @@ TagManager:
   - Explosion
   - Interactable
   - LongGrass
-  - 
-  - 
+  - ItemExtraBomb
+  - ItemSpeedIncrease
   - 
   - 
   - 
@@ -49,6 +50,9 @@ TagManager:
   - name: Bomb
     uniqueID: 1726640197
     locked: 0
+  - name: ItemExtraBomb
+    uniqueID: 4033984855
+    locked: 0
   - name: Player
     uniqueID: 3585803643
     locked: 0
@@ -63,4 +67,7 @@ TagManager:
     locked: 0
   - name: LongGrass
     uniqueID: 4890797
+    locked: 0
+  - name: ItemSpeedIncrease
+    uniqueID: 1893903061
     locked: 0

@@ -25,7 +25,8 @@ public class BombController : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
-        if (bombsRemaining > 0 && Input.GetKeyDown(inputKey))
+        //if (bombsRemaining > 0 && Input.GetKeyDown(inputKey))
+        if (bombAmount > 0 && Input.GetKeyDown(inputKey))
         {
             StartCoroutine(PlaceBomb());
         }
@@ -36,7 +37,8 @@ public class BombController : MonoBehaviour
         Vector2 position = transform.position;
 
         GameObject bomb = Instantiate(bombPrefab, position, Quaternion.identity);
-        bombsRemaining--;
+        //bombsRemaining--;
+        bombAmount--;
         yield return new WaitForSeconds(2);
 
         position = bomb.transform.position;
@@ -51,7 +53,7 @@ public class BombController : MonoBehaviour
         Explode(position, Vector2.right, explosionRadius);
 
         Destroy(bomb);
-        bombsRemaining++;
+        //bombsRemaining++;
     }
 
     private void Explode(Vector2 position, Vector2 direction, int length)
@@ -70,5 +72,11 @@ public class BombController : MonoBehaviour
         explosion.DestroyAfter(explosionDuration);
 
         Explode(position, direction, length - 1);
+    }
+
+    public void AddBomb()
+    {
+        bombAmount++;
+        //bombsRemaining++;
     }
 }

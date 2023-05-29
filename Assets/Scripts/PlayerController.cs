@@ -183,7 +183,7 @@ public class PlayerController : MonoBehaviour
             //DeathSequence();
         }*/
 
-        if (collision.CompareTag("Bomb"))
+        /*if (collision.CompareTag("Bomb"))
         {
             heart.Decrease();
             if (heart.GetMaxHealth() <= 0)
@@ -192,7 +192,7 @@ public class PlayerController : MonoBehaviour
                 uiManager.ShowPanelGameOver(true);
             }
             Destroy(collision.gameObject);
-        }
+        }*/
     }
 
     public void DeathSequence()

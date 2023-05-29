@@ -1,11 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class GameController : MonoBehaviour
 {
     public GameObject gold;
     public GameObject bomb;
+    public GameObject itemSpeedIncrease;
+    public GameObject player;
     UIManager m_ui;
     int gold_score;
 
@@ -14,8 +17,10 @@ public class GameController : MonoBehaviour
     {
         SpawnGold();
         SpawnBomb();
+        SpawnItemSpeedIncrease();
         m_ui = FindObjectOfType<UIManager>();
         m_ui.SetScoreText("Gold: " + gold_score);
+        //player.SetActive(false);
     }
 
     // Update is called once per frame
@@ -44,6 +49,18 @@ public class GameController : MonoBehaviour
             if (bomb)
             {
                 Instantiate(bomb, spawnPos, Quaternion.identity);
+            }
+        }
+    }
+
+    public void SpawnItemSpeedIncrease()
+    {
+        for (int i = 0; i < 20; i++)
+        {
+            Vector2 spawnPos = new Vector2(Random.Range(-68, 80), Random.Range(38, -33));
+            if (itemSpeedIncrease)
+            {
+                Instantiate(itemSpeedIncrease, spawnPos, Quaternion.identity);
             }
         }
     }
